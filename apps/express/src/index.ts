@@ -1,8 +1,8 @@
 import express from "express"
 import "./config/env"
+import "./databases/mongo"
 import router from "./routes"
 const app = express()
-
 app.use("/", router)
 
 const PORT = process.env.PORT
