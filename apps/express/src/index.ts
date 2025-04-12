@@ -1,12 +1,12 @@
 import express from "express"
+import "./config/env"
 import router from "./routes"
 const app = express()
 
 app.use("/", router)
 
-app.listen(3000, (err) => {
-  if (err) {
-    throw err.message
-  }
-  console.log("server on http://127.0.0.1:3000")
+const PORT = process.env.PORT
+app.listen(PORT, (err) => {
+  if (err) throw err.message
+  console.log(`server is running on http://127.0.0.1:${PORT}`)
 })
