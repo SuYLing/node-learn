@@ -1,8 +1,10 @@
 import mongoose from "mongoose"
 
-mongoose
-  .connect(process.env.MONGO_URL)
-  .then((val) => {
-    console.log("connected mongo successful: ", val)
-  })
-  .catch((err) => console.log(err))
+export const connectToMongo = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URL)
+    console.log("connected Mongo  successful!")
+  } catch (err) {
+    console.log("some error at connecting to mongo: ", err)
+  }
+}
