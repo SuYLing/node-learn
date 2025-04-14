@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
+import mongoose, { type InferSchemaType } from "mongoose"
 
 const booksSchema = new mongoose.Schema({
   title: {
@@ -6,6 +6,11 @@ const booksSchema = new mongoose.Schema({
     require: [true, "book title is required"],
     trim: true,
   },
+  createAt: {
+    type: Date,
+    default: Date.now,
+  },
 })
-
-export default mongoose.model("Book", booksSchema)
+export type BookSchemaType = InferSchemaType<typeof booksSchema>
+const Book = mongoose.model("Book", booksSchema)
+export default Book

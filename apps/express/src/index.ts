@@ -9,13 +9,13 @@ const PORT = process.env.PORT
 
 // create a root application
 const app = express()
-// register routes
-app.use("/", router)
+
 // use middleware
 app.use(express.json())
 // connent to database
 connectToMongo()
-
+// register routes
+app.use("/", router)
 // listen server
 app.listen(PORT, (err) => {
   if (err) throw err.message
