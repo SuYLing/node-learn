@@ -1,6 +1,11 @@
 import bcrypt from "bcryptjs"
 import { type RequestHandler } from "express"
 import { UserModel, type UserSchemaType } from "../models/user.model"
+import { sendRes } from "../utils/response"
+type ApiResponse = {
+  message: string
+  success: boolean
+}
 export const registerUser: RequestHandler<
   null,
   {
@@ -22,7 +27,7 @@ export const registerUser: RequestHandler<
       ],
     })
     if (checkExistingUser) {
-      return void res.status(400).json({
+      return void sendRes(res, 400, {
         success: false,
         message: "user is existed",
       })
@@ -38,27 +43,61 @@ export const registerUser: RequestHandler<
       role,
     })
     if (newlyUser) {
-      return void res.status(201).json({
+      return void sendRes<{
+        username: string
+      }>(res, 201, {
         success: true,
-        message: `create user successful ${newlyUser.username}`,
+        message: "create user successful",
+        data: {
+          username: newlyUser.username,
+        },
       })
     }
-    return void res.status(400).json({
+    return void sendRes(res, 400, {
       success: false,
       message: `create user have some errors`,
     })
   } catch (error) {
-    return void res.status(500).json({
+    return void sendRes(res, 500, {
       message: error as string,
       success: false,
     })
   }
 }
-export const loginUser: RequestHandler = async (req, res) => {
+export const loginUser: RequestHandler<
+  null,
+  {
+    message: string
+    success: boolean
+  },
+  Pick<UserSchemaType, "username" | "password">
+> = async (req, res) => {
   try {
+    const { username, password } = req.body
+    const user = await UserModel.findOne({
+      username,
+    })
+    if (!user) {
+      return void sendRes(res, 400, {
+        success: false,
+        message: "user not exits",
+      })
+    }
+    const isPasswordMatch = await bcrypt.compare(password, user.password)
+    if (!isPasswordMatch) {
+      return void sendRes(res, 400, {
+        success: false,
+        message: "password not right",
+      })
+    }
+    return void sendRes(res, 400, {
+      success: true,
+      message: "login success",
+    })
   } catch (error) {
-    res.status(500).json({
-      message: error,
+    return void sendRes(res, 500, {
+      success: false,
+      message: error as string,
     })
   }
 }
