@@ -20,6 +20,7 @@ app.use(express.json())
 connectToMongo()
 // register routes
 app.use("/", router)
+app.use(express.static("public"))
 // listen server
 app.listen(PORT, (err) => {
   if (err) throw err.message
