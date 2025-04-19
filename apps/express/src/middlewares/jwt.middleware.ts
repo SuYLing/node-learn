@@ -1,8 +1,8 @@
-import type { Handler } from "express"
+import type { RequestHandler } from "express"
 import type { UserSchemaType } from "../models/user.model"
 import { verifyToken } from "../utils/jwt"
 
-export const checkAuth: Handler = (req, res, next) => {
+export const checkAuth: RequestHandler = (req, res, next) => {
   const { authorization } = req.headers
   if (!authorization) {
     return void res.status(500).json({
@@ -10,14 +10,15 @@ export const checkAuth: Handler = (req, res, next) => {
       message: "please login at first!",
     })
   } else {
-    console.log(authorization)
     try {
       const playload = verifyToken(authorization) as {
         role: UserSchemaType["role"]
+        userId: string
       }
-      console.log(playload)
+      console.log(playload, "playload")
+      req.user = playload
       if (playload.role === "admin") {
-        return next()
+        next()
       } else {
         return void res.status(500).json({
           success: false,
@@ -27,7 +28,7 @@ export const checkAuth: Handler = (req, res, next) => {
     } catch (error) {
       return void res.status(500).json({
         success: false,
-        message: "token verify error:"+ error,
+        message: "token verify error:" + error,
       })
     }
   }

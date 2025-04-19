@@ -6,7 +6,6 @@ export const getAllBooks: RequestHandler = async (req, res) => {
   })
 }
 export const createBook: RequestHandler = async (req, res) => {
-  console.log(req.body, "req.body")
   if (req.body) {
     const resMes = await createNewBook(req.body)
     res.status(201).json(resMes)

@@ -6,7 +6,6 @@ export const getBooks = async () => {
 }
 
 export const createNewBook = async (book: { title: string }) => {
-  console.log(book)
   const newlyCreatedBook = await Book.create(book)
   if (newlyCreatedBook) {
     return {

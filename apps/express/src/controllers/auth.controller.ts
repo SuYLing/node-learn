@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs"
 import { type RequestHandler } from "express"
-import jsw from "jsonwebtoken"
 import { UserModel, type UserSchemaType } from "../models/user.model"
+import { generateToken } from "../utils/jwt"
 import { sendRes } from "../utils/response"
 type ApiResponse = {
   message: string
@@ -91,17 +91,11 @@ export const loginUser: RequestHandler<
         message: "password not right",
       })
     }
-    const accessToken = jsw.sign(
-      {
-        useId: user._id,
-        role: user.role,
-      },
-      process.env.JWT_SECRET_KEY,
-      {
-        expiresIn: "30s",
-      }
-    )
-    return void sendRes(res, 400, {
+    const accessToken = generateToken({
+      userId: user._id,
+      role: user.role,
+    })
+    return void sendRes(res, 200, {
       success: true,
       message: "login success",
       data: {
