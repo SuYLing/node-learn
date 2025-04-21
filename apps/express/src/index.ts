@@ -3,6 +3,7 @@ import path from "path"
 import "./config/env"
 import "./databases/mongo"
 import { connectToMongo } from "./databases/mongo"
+import { requestLooger } from "./middlewares/request.middleware"
 import router from "./routes"
 // get some variables from env
 const PORT = process.env.PORT
@@ -13,7 +14,7 @@ const app = express()
 // set view engine
 app.set("view engine", "ejs")
 app.set("views", path.join(import.meta.dirname, "views"))
-
+app.use(requestLooger)
 // use middleware
 app.use(express.json())
 // connent to database
