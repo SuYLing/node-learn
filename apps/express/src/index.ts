@@ -3,6 +3,7 @@ import path from "path"
 import "./config/env"
 import "./databases/mongo"
 import { connectToMongo } from "./databases/mongo"
+import { globalErrorHandler } from "./middlewares/error.middleware"
 import { requestLooger } from "./middlewares/request.middleware"
 import router from "./routes"
 // get some variables from env
@@ -17,6 +18,7 @@ app.set("views", path.join(import.meta.dirname, "views"))
 app.use(requestLooger)
 // use middleware
 app.use(express.json())
+app.use(globalErrorHandler)
 // connent to database
 connectToMongo()
 // register routes
