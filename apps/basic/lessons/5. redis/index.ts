@@ -14,8 +14,8 @@ async function testRedisConnection() {
   } finally {
     const value = await client.get("key")
     console.log(value)
-    const delectCount = await client.del("key")
-    console.log(delectCount)
+    // const delectCount = await client.del("key")
+    // console.log(delectCount)
     await client.quit()
   }
 }
