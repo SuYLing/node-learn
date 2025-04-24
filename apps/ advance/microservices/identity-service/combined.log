@@ -1,0 +1,3 @@
+{"level":"info","message":"server on http://127.0.0.1:undefined","service":"identity-service","timestamp":"2025-04-24T12:18:33.869Z"}
+{"level":"info","message":"server on http://127.0.0.1:3001","service":"identity-service","timestamp":"2025-04-24T12:20:27.020Z"}
+{"level":"info","message":"server on http://127.0.0.1:3001","service":"identity-service","timestamp":"2025-04-24T12:20:28.696Z"}
