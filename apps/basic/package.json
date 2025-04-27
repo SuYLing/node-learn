@@ -13,11 +13,13 @@
   "packageManager": "pnpm@10.6.5",
   "devDependencies": {
     "@types/node": "^22.14.0",
+    "@types/pg": "^8.11.14",
     "@types/redis": "^4.0.11",
     "tsx": "^4.19.3",
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "pg": "^8.15.6",
     "redis": "^4.7.0"
   }
 }
