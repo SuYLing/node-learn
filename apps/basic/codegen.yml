@@ -1,0 +1,6 @@
+schema: "./schema/*.gql"
+generates:
+  schema:
+    preset: "@eddeee888/gcg-typescript-resolver-files"
+    plugins: []
+    watchPattern: "**/*.mappers.ts"
